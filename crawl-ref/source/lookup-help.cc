@@ -906,7 +906,6 @@ void LookupType::display_keys(vector<string> &key_list) const
     while (true)
     {
         vector<MenuEntry*> sel = desc_menu.show();
-        redraw_screen();
         if (sel.empty())
         {
             if (toggleable_sort() && desc_menu.getkey() == CONTROL('S'))
