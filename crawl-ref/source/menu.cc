@@ -847,7 +847,18 @@ bool Menu::process_key(int keyin)
         select_items(keyin, num);
         get_selected(&sel);
         if (sel.size() == 1 && (flags & MF_SINGLESELECT))
+        {
+            if (on_single_selection && on_single_selection(*sel[0]))
+            {
+#ifndef USE_TILE_LOCAL
+                clrscr();
+#endif
+                deselect_all(true);
+                draw_menu();
+                return true;
+            }
             return false;
+        }
 
         draw_title();
 
