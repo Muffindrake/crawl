@@ -295,7 +295,7 @@ class Menu
     friend class menu_filter_line_reader;
 #endif
 public:
-    Menu(int flags = MF_MULTISELECT, const string& tagname = "");
+    Menu(int flags = MF_MULTISELECT, const string& tagname = "", KeymapContext kmc = KMC_MENU);
 
     virtual ~Menu();
 
@@ -385,6 +385,7 @@ protected:
     bool alive;
 
     int last_selected;
+    KeymapContext m_kmc;
 
 #ifdef USE_TILE_LOCAL
     char* m_filter_text; // nullptr == not in filter mode
@@ -1117,34 +1118,3 @@ protected:
 
 int linebreak_string(string& s, int maxcol, bool indent = false);
 string get_linebreak_string(const string& s, int maxcol);
-
-#ifdef USE_TILE_LOCAL
-class Popup
-{
-public:
-    // constructors/destructor
-    Popup(string prompt);
-    ~Popup();
-
-    // accessors
-    //  get/set prompt text
-    void set_prompt(string prompt);
-    string get_prompt() { return m_prompt; }
-
-    // methods
-    //  add a menu entry to the popup
-    void push_entry(MenuEntry *me);
-    //  remove a menu entry from the popup
-    MenuEntry* next_entry();
-
-    //  draw the popup and return key pressed
-    int pop();
-
-protected:
-    vector<MenuEntry*> m_entries;
-    string m_prompt;
-
-private:
-    unsigned int m_curr;
-};
-#endif
